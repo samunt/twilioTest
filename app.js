@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var twilio = require('twilio');
+const http = require('http');
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
 // Load configuration information from system environment variables.
 var TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID,
@@ -38,11 +40,21 @@ app.post('/message', function(req, res, next) {
   client.messages.create({
     to: req.body.to,
     from: TWILIO_PHONE_NUMBER,
-    body: 'This is Sam, confirming that Twilio will send out an SMS from NodeJS server!'
+    body: 'This is Sam, confirming that Twilio will send out an SMS from NodeJS server! You can respond to this message and that response will be saved to the twilio dashboard'
   }).then(function(message) {
     // When we get a response from Twilio, respond to the HTTP POST request
     res.send('Message is inbound!');
   });
+});
+
+// Handle a response
+app.post('/sms', (req, res) => {
+  const twiml = new MessagingResponse();
+
+  twiml.message('The Robots are coming! Head for the hills!');
+
+  res.writeHead(200, {'Content-Type': 'text/xml'});
+  res.end(twiml.toString());
 });
 
 // handle a POST request to make an outbound call.
