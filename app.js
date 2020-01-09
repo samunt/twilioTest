@@ -40,7 +40,7 @@ app.post('/message', function(req, res, next) {
   client.messages.create({
     to: req.body.to,
     from: TWILIO_PHONE_NUMBER,
-    body: 'This is Sam, confirming that Twilio will send out an SMS from NodeJS server! You can respond to this message and that response will be saved to the twilio dashboard'
+    body: 'This is Sam, confirming that Twilio will send out an SMS from NodeJS server! You can respond to this message and that response will be saved to the twilio dashboard -Sam'
   }).then(function(message) {
     // When we get a response from Twilio, respond to the HTTP POST request
     res.send('Message is inbound!');
@@ -51,7 +51,7 @@ app.post('/message', function(req, res, next) {
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
 
-  twiml.message('The Robots are coming! Head for the hills!');
+  twiml.message('Message received! In practice, we can start an automated conversation from this point -Sam');
 
   res.writeHead(200, {'Content-Type': 'text/xml'});
   res.end(twiml.toString());
