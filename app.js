@@ -36,6 +36,7 @@ app.get('/', function(req, res, next) {
 // handle a POST request to send a text message. 
 // This is sent via ajax on our home page
 app.post('/message', function(req, res, next) {
+  console.log('req======>', req)
   // Use the REST client to send a text message
   client.messages.create({
     to: req.body.to,
