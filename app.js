@@ -40,7 +40,7 @@ app.post('/message', function(req, res, next) {
   client.messages.create({
     to: req.body.to,
     from: TWILIO_PHONE_NUMBER,
-    body: 'This is Sam, confirming that Twilio will send out an SMS from NodeJS server! You can respond to this message and that response will be saved to the twilio dashboard -Sam'
+    body: ' Hello Alec, this is a test coming from twilio'
   }).then(function(message) {
     // When we get a response from Twilio, respond to the HTTP POST request
     res.send('Message is inbound!');
